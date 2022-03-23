@@ -15,9 +15,7 @@ const generalFreeSavingDocks = 5;
 let queue = [];
 let freeSlots = generalFreeSavingDocks;
 
-const {
-    token
-} = require("./config.json");
+const token = process.env.LINK_TO_VIDEO_TOKEN;
 const {Status} = require("./handler/StatusHandler");
 
 client.once("ready", () => {
