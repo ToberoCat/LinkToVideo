@@ -1,0 +1,21 @@
+{
+  "name": "musicbot",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "compressing": "^1.5.1",
+    "discord.js": "^13.2.0",
+    "ffmpeg": "^0.0.4",
+    "ytdl": "^1.4.1",
+    "ytdl-core": "^4.11.0"
+  },
+  "devDependencies": {
+    "system-commands": "^1.1.7"
+  }
+}
