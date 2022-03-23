@@ -1,4 +1,4 @@
-const { Client, MessageAttachment } = require('discord.js');
+const {Client, MessageAttachment} = require('discord.js');
 const fs = require('fs');
 const ytdl = require('ytdl-core');
 const EventEmitter = require('events');
@@ -8,7 +8,7 @@ const child_process = require("child_process");
 const StatusHandler = require("./handler/StatusHandler");
 const StatusManager = new StatusHandler.StatusManager();
 
-const client = new Client({ intents: 32767 });
+const client = new Client({intents: 32767});
 
 const generalFreeSavingDocks = 5;
 
@@ -24,7 +24,7 @@ client.once("ready", () => {
 });
 
 async function sendVideo(msg, message, slot) {
-    await msg.edit({ content: message.member.user.toString() + " sent this video: ",  files: [ "./" + slot ]});
+    await msg.edit({content: message.member.user.toString() + " sent this video: ", files: ["./" + slot]});
     await message.member.send(slot + " finished converting your video. Check it out: " + msg.url);
     await message.delete();
     fs.unlinkSync(slot);
@@ -33,7 +33,7 @@ async function sendVideo(msg, message, slot) {
 function getProgressBar(current, max) {
     const n = 15;
     const progress = Math.round((current / max) * n);
-    return "█".repeat(progress) + "░".repeat(n-progress);
+    return "█".repeat(progress) + "░".repeat(n - progress);
 }
 
 function getMb(size) {
@@ -65,7 +65,7 @@ function finish(msg, message, mp4, deleteExtra, status) {
 async function convert(url, message, deleteExtra) {
     const msg = await message.channel.send("Processing...");
     if (freeSlots <= 0) {
-        const queueMsg = await message.reply("Cannot convert another video. Please wait. All slots are already being in use. Video got queued: " + (queue.length+1))
+        const queueMsg = await message.reply("Cannot convert another video. Please wait. All slots are already being in use. Video got queued: " + (queue.length + 1))
         queue.push({
             url: url,
             message: message,
@@ -79,11 +79,11 @@ async function convert(url, message, deleteExtra) {
     const fileSizeMb = getMb(fileSize);
     const videoTitle = info.videoDetails.title.replace(/[^\w\s]/gi, '');
     if (fs.existsSync(videoTitle + ".mp4")) {
-        return msg.edit({ content: videoTitle + " is already being processed. Please wait until video finished" });
+        return msg.edit({content: videoTitle + " is already being processed. Please wait until video finished"});
     }
 
     if (fileSizeMb > 8) {
-        msg.edit({ content: "Video is too big. Skipping download" });
+        msg.edit({content: "Video is too big. Skipping download"});
         message.member.send(videoTitle + " is too big");
         return;
     }
@@ -94,7 +94,7 @@ async function convert(url, message, deleteExtra) {
     const slot = freeSlots;
     freeSlots--;
 
-    const video = ytdl(url, { highWaterMark: 10000, format: 140 });
+    const video = ytdl(url, {highWaterMark: 10000, format: 140});
 
     msg.edit("Please wait while converting in slot " + slot + "...");
 
@@ -105,7 +105,7 @@ async function convert(url, message, deleteExtra) {
     video.on("progress", (n, m, l) => {
         const newProgress = getProgressBar(m, fileSize);
         if (newProgress !== lastProgress) {
-            msg.edit({content: "Download progress: " + newProgress + " | " + getMb(m) + "mB / " + fileSizeMb + "mB" });
+            msg.edit({content: "Download progress: " + newProgress + " | " + getMb(m) + "mB / " + fileSizeMb + "mB"});
             lastProgress = newProgress;
         }
     });
@@ -122,11 +122,11 @@ client.on("messageCreate", async (message) => {
         if (messagePart.startsWith("https://youtu.be/") || messagePart.startsWith("http://youtu.be/")) {
             const videoId = messagePart.replace("https://youtu.be/", "").replace("http://youtu.be/", "");
             convert("https://www.youtube.com/watch?v=" + videoId, message);
-            return;  
+            return;
         }
         if ((messagePart.startsWith("https://") || messagePart.startsWith("http://")) && messagePart.includes("youtu")) {
             convert(messagePart, message);
-            return;  
+            return;
         }
     }
 });
