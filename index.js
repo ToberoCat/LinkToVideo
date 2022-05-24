@@ -4,8 +4,10 @@ const ytdl = require('ytdl-core');
 const EventEmitter = require('events');
 const child_process = require("child_process");
 
+// msg.edit({content: "Download progress: " + newProgress + " | " + getMb(m) + "mB / " + fileSizeMb + "mB"});
+
 //Status
-const StatusHandler = require("./handler/StatusHandler");
+const StatusHandler = require("./src/handler/StatusHandler");
 const StatusManager = new StatusHandler.StatusManager();
 
 const client = new Client({intents: 32767});
@@ -16,7 +18,7 @@ let queue = [];
 let freeSlots = generalFreeSavingDocks;
 
 const token = process.env.LINK_TO_VIDEO_TOKEN;
-const {Status} = require("./handler/StatusHandler");
+const {Status} = require("./src/handler/StatusHandler");
 
 client.once("ready", () => {
     StatusManager.Ready(client, 5000);
@@ -34,10 +36,6 @@ function getProgressBar(current, max) {
     const n = 15;
     const progress = Math.round((current / max) * n);
     return "█".repeat(progress) + "░".repeat(n - progress);
-}
-
-function getMb(size) {
-    return Math.round((size / 1000000.0) * 100) / 100;
 }
 
 function getSize(path) {

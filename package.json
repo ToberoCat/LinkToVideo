@@ -12,10 +12,14 @@
     "compressing": "^1.5.1",
     "discord.js": "^13.2.0",
     "ffmpeg": "^0.0.4",
+    "fluent-ffmpeg": "^2.1.2",
+    "node-fetch": "^3.2.4",
+    "puppeteer": "^14.1.0",
     "ytdl": "^1.4.1",
     "ytdl-core": "^4.11.0"
   },
   "devDependencies": {
-    "system-commands": "^1.1.7"
+    "system-commands": "^1.1.7",
+    "url-regex": "^5.0.0"
   }
 }
