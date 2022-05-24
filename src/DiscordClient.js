@@ -80,4 +80,4 @@ function getDownloader(type) {
 }
 
 
-client.login(!TOKEN ? "ODkzNTU1MzIzMjAwMjM3NTk5.GryYV4.KXAum8a1jVWhr8gmZEGijQ2BkFkcDHzZFikVpY" : TOKEN);
+client.login(TOKEN);
